@@ -3,7 +3,8 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#ffffff">
   <title>Продолжить</title>
 
@@ -19,7 +20,10 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-    /* Светлый дизайн для ПК */
+    /* =====================================
+       ДИЗАЙН ДЛЯ ПК
+    ===================================== */
+
     body.desktop {
       min-height: 100vh;
       min-height: 100dvh;
@@ -53,7 +57,8 @@
       background: rgba(255,255,255,.96);
       border: 1px solid #edf0f7;
       border-radius: 26px;
-      box-shadow: 0 18px 60px rgba(45,65,100,.09);
+      box-shadow:
+        0 18px 60px rgba(45,65,100,.09);
     }
 
     .photo {
@@ -105,7 +110,10 @@
       line-height: 1.7;
     }
 
-    /* Активная кнопка на всех устройствах */
+    /* =====================================
+       КНОПКА ПРОДОЛЖИТЬ
+    ===================================== */
+
     .continue-button {
       display: flex;
       align-items: center;
@@ -116,7 +124,7 @@
       border: none;
       border-radius: 15px;
       background: #229ed9;
-      color: #fff;
+      color: #ffffff;
       font-size: 17px;
       font-weight: 700;
       line-height: 1.3;
@@ -125,26 +133,38 @@
       user-select: none;
       -webkit-user-select: none;
       -webkit-touch-callout: default;
-      transition: background .2s ease;
+      transition:
+        background .2s ease,
+        transform .2s ease;
     }
 
     .continue-button:active {
       background: #1887bd;
+      transform: scale(.98);
+    }
+
+    .continue-button:focus-visible {
+      outline: 3px solid #ffffff;
+      outline-offset: 3px;
     }
 
     body.desktop .continue-button {
-      animation: pulse 1.8s ease-in-out infinite;
-      box-shadow: 0 0 0 0 rgba(34,158,217,.35);
+      animation:
+        pulse 1.8s ease-in-out infinite;
+      box-shadow:
+        0 0 0 0 rgba(34,158,217,.35);
     }
 
     @keyframes pulse {
       0%, 100% {
-        box-shadow: 0 0 0 0 rgba(34,158,217,.30);
+        box-shadow:
+          0 0 0 0 rgba(34,158,217,.30);
         filter: brightness(1);
       }
 
       50% {
-        box-shadow: 0 0 0 10px rgba(34,158,217,0);
+        box-shadow:
+          0 0 0 10px rgba(34,158,217,0);
         filter: brightness(1.06);
       }
     }
@@ -156,15 +176,23 @@
       font-size: 12px;
     }
 
+    /* =====================================
+       ПОДСКАЗКИ
+    ===================================== */
+
     .hint {
       margin-top: 18px;
       font-size: 14px;
       line-height: 1.5;
-      color: #fff;
-      text-shadow: 0 1px 4px rgba(0,0,0,.8);
+      color: #ffffff;
+      text-shadow:
+        0 1px 4px rgba(0,0,0,.8);
     }
 
-    /* Мобильный дизайн */
+    /* =====================================
+       МОБИЛЬНЫЙ ДИЗАЙН
+    ===================================== */
+
     body.mobile {
       min-height: 100vh;
       min-height: 100dvh;
@@ -172,7 +200,8 @@
       align-items: center;
       justify-content: center;
       padding: 24px;
-      color: #fff;
+      color: #ffffff;
+
       background:
         linear-gradient(
           rgba(0,0,0,.35),
@@ -218,10 +247,13 @@
       A little connection 💙
     </div>
 
-    <h1>Let's get to know each other</h1>
+    <h1>
+      Let's get to know each other
+    </h1>
 
     <p class="description">
-      Иногда одно знакомство может сделать день намного лучше.
+      Иногда одно знакомство может сделать
+      день намного лучше.
       Буду рада пообщаться с тобой поближе.
     </p>
 
@@ -242,15 +274,21 @@
 
   </main>
 
+
   <script>
     (() => {
 
       /* =====================================
-         ЕДИНАЯ ССЫЛКА ДЛЯ ВСЕХ УСТРОЙСТВ
+         ГЛАВНАЯ ПАРТНЁРСКАЯ ССЫЛКА
       ===================================== */
 
       const targetUrl =
         "https://stripw.top/click?o=73&a=6549&sub_id1=test";
+
+
+      /* =====================================
+         ЭЛЕМЕНТЫ СТРАНИЦЫ
+      ===================================== */
 
       const ua = navigator.userAgent || "";
 
@@ -260,7 +298,6 @@
       const hint =
         document.getElementById("hint");
 
-      // Ссылка всегда активна
       link.href = targetUrl;
 
 
@@ -275,30 +312,35 @@
           navigator.maxTouchPoints > 1
         );
 
-      const isAndroid = /Android/i.test(ua);
+      const isAndroid =
+        /Android/i.test(ua);
 
-      const isMobile = isIOS || isAndroid;
+      const isMobile =
+        isIOS || isAndroid;
 
 
       /* =====================================
-         ВСТРОЕННЫЙ БРАУЗЕР
+         ОПРЕДЕЛЕНИЕ ВСТРОЕННОГО БРАУЗЕРА
       ===================================== */
 
       const isInApp =
-        /TikTok|musical_ly|Bytedance|Instagram|FBAN|FBAV|FB_IAB|Line\/|Twitter|Snapchat|;\s?wv\)/i.test(ua);
+        /TikTok|musical_ly|musically|Bytedance|Aweme|Instagram|FBAN|FBAV|FB_IAB|Line\/|Twitter|Snapchat|;\s?wv\)/i.test(ua);
 
 
       /* =====================================
-         ЯЗЫК
+         ОПРЕДЕЛЕНИЕ ЯЗЫКА
       ===================================== */
 
-      const en = (navigator.language || "ru")
-        .toLowerCase()
-        .startsWith("en");
+      const en =
+        (navigator.language || "ru")
+          .toLowerCase()
+          .startsWith("en");
 
 
       /* =====================================
-         ПК: АВТОМАТИЧЕСКИЙ ПЕРЕХОД
+         ПК
+
+         АВТОМАТИЧЕСКИЙ ПЕРЕХОД
       ===================================== */
 
       if (!isMobile) {
@@ -319,8 +361,9 @@
 
 
       /* =====================================
-         ВНЕШНИЙ БРАУЗЕР:
-         SAFARI / CHROME
+         ВНЕШНИЙ БРАУЗЕР
+
+         CHROME / SAFARI / ДРУГИЕ
 
          АВТОМАТИЧЕСКИЙ ПЕРЕХОД
       ===================================== */
@@ -334,40 +377,54 @@
 
 
       /* =====================================
-         ВСТРОЕННЫЕ БРАУЗЕРЫ
+         ANDROID ВНУТРИ TIKTOK
 
-         КНОПКА АКТИВНА
+         ПОПЫТКА ОТКРЫТЬ GOOGLE CHROME
       ===================================== */
 
-      // Кнопка работает как обычная ссылка.
-      // Никаких preventDefault и блокировок.
+      if (isAndroid) {
 
-      link.href = targetUrl;
+        const parsedUrl = new URL(targetUrl);
 
+        // Android Intent для Chrome
+        const chromeIntent =
+          "intent://" +
+          parsedUrl.host +
+          parsedUrl.pathname +
+          parsedUrl.search +
+          "#Intent;" +
+          "scheme=https;" +
+          "action=android.intent.action.VIEW;" +
+          "package=com.android.chrome;" +
+          "S.browser_fallback_url=" +
+          encodeURIComponent(targetUrl) +
+          ";end";
 
-      /* =====================================
-         IPHONE ВНУТРИ ПРИЛОЖЕНИЙ
-      ===================================== */
+        // Кнопка пытается открыть Chrome
+        link.href = chromeIntent;
 
-      if (isIOS) {
-
+        // Подсказка, если браузер блокирует Intent
         hint.textContent = en
-          ? 'If the link does not open, tap “…” and choose “Open in Browser.”'
-          : 'Если ссылка не открывается, нажми «…» и выбери «Открыть в браузере».';
+          ? 'If Chrome does not open, tap ⋮ and choose "Open in Browser".'
+          : 'Если Chrome не открылся, нажми ⋮ и выбери «Открыть в браузере».';
 
         return;
       }
 
 
       /* =====================================
-         ANDROID ВНУТРИ ПРИЛОЖЕНИЙ
+         IPHONE ВНУТРИ TIKTOK
+
+         ОБЫЧНАЯ РАБОЧАЯ ССЫЛКА
       ===================================== */
 
-      if (isAndroid) {
+      if (isIOS) {
+
+        link.href = targetUrl;
 
         hint.textContent = en
-          ? 'If the link does not open, tap ⋯ at the top and select "Open in Browser".'
-          : 'Если ссылка не открывается, нажми ⋯ вверху и выбери «Открыть в браузере».';
+          ? 'If the link does not open, tap ⋯ and choose "Open in Browser".'
+          : 'Если ссылка не открывается, нажми ⋯ и выбери «Открыть в браузере».';
 
         return;
       }
