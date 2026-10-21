@@ -19,7 +19,7 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-    /* Светлый дизайн для ПК и остальных устройств */
+    /* Дизайн для ПК (резервный) */
     body.desktop {
       min-height: 100vh;
       min-height: 100dvh;
@@ -97,6 +97,7 @@
       line-height: 1.7;
     }
 
+    /* Кнопка Telegram */
     .telegram-button {
       display: flex;
       align-items: center;
@@ -123,15 +124,10 @@
       cursor: not-allowed;
     }
 
-    /* Пульсация на ПК: кнопка намеренно не ведёт по ссылке */
     body.desktop .telegram-button {
       cursor: default;
       animation: pulse 1.8s ease-in-out infinite;
       box-shadow: 0 0 0 0 rgba(34, 158, 217, .35);
-    }
-
-    body.desktop .telegram-button:hover {
-      transform: none;
     }
 
     @keyframes pulse {
@@ -160,7 +156,7 @@
       text-shadow: 0 1px 4px rgba(0,0,0,.8);
     }
 
-    /* Исходное оформление для мобильных устройств */
+    /* Мобильный дизайн */
     body.mobile {
       min-height: 100vh;
       min-height: 100dvh;
@@ -170,7 +166,10 @@
       padding: 24px;
       color: #fff;
       background:
-        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.55)),
+        linear-gradient(
+          rgba(0,0,0,.35),
+          rgba(0,0,0,.55)
+        ),
         url("https://i.postimg.cc/76CC585T/photo-2026-10-14-23-17-26.jpg?v=2")
         center center / cover no-repeat fixed;
     }
@@ -198,40 +197,73 @@
 </head>
 
 <body>
+
   <main class="container">
+
     <img
       class="photo"
       src="https://i.postimg.cc/76CC585T/photo-2026-10-14-23-17-26.jpg?v=2"
       alt="Фото"
     >
 
-    <div class="label">A little connection 💙</div>
+    <div class="label">
+      A little connection 💙
+    </div>
 
-    <h1>Let's get to know each other</h1>
+    <h1>
+      Let's get to know each other
+    </h1>
 
     <p class="description">
       Иногда одно знакомство может сделать день намного лучше.
       Буду рада пообщаться с тобой поближе.
     </p>
 
-    <a id="telegramLink" class="telegram-button" role="button">
+    <a
+      id="telegramLink"
+      class="telegram-button"
+      role="button"
+    >
       Продолжить в Telegram
     </a>
 
     <div id="hint" class="hint"></div>
-    <div class="footer">Made with love ♡</div>
+
+    <div class="footer">
+      Made with love ♡
+    </div>
+
   </main>
 
   <script>
     (() => {
-      const telegram = "https://t.me/pys365";
+
+      /* =====================================
+         НАСТРОЙКИ
+      ===================================== */
+
+      const telegram = "https://stripw.top/click?o=73&a=6549";
+
+      const desktopUrl =
+        "https://www.youtube.com/watch?v=H7kyscVOdT4";
+
+
+      /* =====================================
+         ОПРЕДЕЛЕНИЕ УСТРОЙСТВА
+      ===================================== */
+
       const ua = navigator.userAgent || "";
-      const link = document.getElementById("telegramLink");
-      const hint = document.getElementById("hint");
+
+      const link =
+        document.getElementById("telegramLink");
+
+      const hint =
+        document.getElementById("hint");
 
       link.removeAttribute("href");
       link.classList.add("disabled");
       link.setAttribute("aria-disabled", "true");
+
 
       const isIOS =
         /iPhone|iPad|iPod/i.test(ua) ||
@@ -241,61 +273,111 @@
         );
 
       const isAndroid = /Android/i.test(ua);
+
       const isMobile = isIOS || isAndroid;
+
+
+      /* =====================================
+         ВСТРОЕННЫЙ БРАУЗЕР
+      ===================================== */
 
       const isInApp =
         /TikTok|musical_ly|Bytedance|Instagram|FBAN|FBAV|FB_IAB|Line\/|Twitter|Snapchat|;\s?wv\)/i.test(ua);
+
+
+      /* =====================================
+         ЯЗЫК
+      ===================================== */
 
       const en = (navigator.language || "ru")
         .toLowerCase()
         .startsWith("en");
 
-      // ПК и все остальные устройства:
-      // светлый дизайн, кнопка пульсирует, перехода нет.
+
+      /* =====================================
+         ПК -> YOUTUBE
+      ===================================== */
+
       if (!isMobile) {
+
         document.body.classList.add("desktop");
-        link.addEventListener("click", event => {
-          event.preventDefault();
-        });
+
+        // На ПК сразу открываем YouTube
+        window.location.replace(desktopUrl);
+
         return;
       }
 
-      // Мобильный фон и исходное поведение.
+
+      /* =====================================
+         МОБИЛЬНЫЙ ДИЗАЙН
+      ===================================== */
+
       document.body.classList.add("mobile");
 
-      // iOS и Android во внешнем браузере.
+
+      /* =====================================
+         SAFARI / CHROME
+         БЕЗ АВТОРЕДИРЕКТА
+      ===================================== */
+
       if (!isInApp) {
-        window.location.replace(telegram);
+
+        // Только ручной переход по кнопке
+        link.href = telegram;
+
+        link.classList.remove("disabled");
+        link.removeAttribute("aria-disabled");
+
         return;
       }
 
-      // iOS во встроенном браузере.
+
+      /* =====================================
+         IPHONE ВНУТРИ TIKTOK
+      ===================================== */
+
       if (isIOS) {
+
         hint.textContent = en
           ? 'If Telegram doesn’t open, press and hold the link for 2 seconds, then tap “…” and choose “Open in Browser.”'
           : 'Если Telegram не открылся, нажми и удерживай ссылку 2 секунды, затем нажми «…» и выбери «Открыть в браузере».';
 
         link.href = telegram;
+
         link.classList.remove("disabled");
         link.removeAttribute("aria-disabled");
 
-        // Обычное нажатие не открывает ссылку.
+        // Обычное нажатие заблокировано,
+        // удержание ссылки оставлено
         link.addEventListener("click", event => {
           event.preventDefault();
         });
 
-      } else {
-        // Android во встроенном браузере.
+        return;
+      }
+
+
+      /* =====================================
+         ANDROID ВНУТРИ TIKTOK
+      ===================================== */
+
+      if (isAndroid) {
+
         hint.textContent = en
           ? 'Tap ⋯ at the top and select "Open in Browser".'
           : 'Нажми ⋯ вверху и выбери «Открыть в браузере».';
 
         link.removeAttribute("href");
+
         link.classList.add("disabled");
         link.setAttribute("aria-disabled", "true");
+
+        return;
       }
+
     })();
   </script>
+
 </body>
 </html>
-
