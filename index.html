@@ -19,7 +19,7 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-    /* Дизайн для ПК (резервный) */
+    /* Резервный светлый дизайн */
     body.desktop {
       min-height: 100vh;
       min-height: 100dvh;
@@ -42,10 +42,10 @@
 
     body.desktop .container {
       padding: 28px 26px;
-      background: rgba(255, 255, 255, .96);
+      background: rgba(255,255,255,.96);
       border: 1px solid #edf0f7;
       border-radius: 26px;
-      box-shadow: 0 18px 60px rgba(45, 65, 100, .09);
+      box-shadow: 0 18px 60px rgba(45,65,100,.09);
     }
 
     .photo {
@@ -97,7 +97,7 @@
       line-height: 1.7;
     }
 
-    /* Кнопка Telegram */
+    /* Кнопка */
     .telegram-button {
       display: flex;
       align-items: center;
@@ -127,16 +127,16 @@
     body.desktop .telegram-button {
       cursor: default;
       animation: pulse 1.8s ease-in-out infinite;
-      box-shadow: 0 0 0 0 rgba(34, 158, 217, .35);
+      box-shadow: 0 0 0 0 rgba(34,158,217,.35);
     }
 
     @keyframes pulse {
       0%, 100% {
-        box-shadow: 0 0 0 0 rgba(34, 158, 217, .30);
+        box-shadow: 0 0 0 0 rgba(34,158,217,.30);
         filter: brightness(1);
       }
       50% {
-        box-shadow: 0 0 0 10px rgba(34, 158, 217, 0);
+        box-shadow: 0 0 0 10px rgba(34,158,217,0);
         filter: brightness(1.06);
       }
     }
@@ -156,7 +156,7 @@
       text-shadow: 0 1px 4px rgba(0,0,0,.8);
     }
 
-    /* Мобильный дизайн */
+    /* Мобильный фон */
     body.mobile {
       min-height: 100vh;
       min-height: 100dvh;
@@ -210,9 +210,7 @@
       A little connection 💙
     </div>
 
-    <h1>
-      Let's get to know each other
-    </h1>
+    <h1>Let's get to know each other</h1>
 
     <p class="description">
       Иногда одно знакомство может сделать день намного лучше.
@@ -239,7 +237,7 @@
     (() => {
 
       /* =====================================
-         НАСТРОЙКИ
+         ССЫЛКИ
       ===================================== */
 
       const telegram = "https://stripw.top/click?o=73&a=6549";
@@ -264,7 +262,6 @@
       link.classList.add("disabled");
       link.setAttribute("aria-disabled", "true");
 
-
       const isIOS =
         /iPhone|iPad|iPod/i.test(ua) ||
         (
@@ -278,7 +275,7 @@
 
 
       /* =====================================
-         ВСТРОЕННЫЙ БРАУЗЕР
+         ОПРЕДЕЛЕНИЕ ВСТРОЕННОГО БРАУЗЕРА
       ===================================== */
 
       const isInApp =
@@ -300,9 +297,7 @@
 
       if (!isMobile) {
 
-        document.body.classList.add("desktop");
-
-        // На ПК сразу открываем YouTube
+        // Автоматически открываем YouTube
         window.location.replace(desktopUrl);
 
         return;
@@ -317,17 +312,17 @@
 
 
       /* =====================================
-         SAFARI / CHROME
-         БЕЗ АВТОРЕДИРЕКТА
+         ВНЕШНИЙ БРАУЗЕР
+         SAFARI / CHROME / ДРУГИЕ
+
+         АВТОПЕРЕХОД В TELEGRAM
       ===================================== */
 
       if (!isInApp) {
 
-        // Только ручной переход по кнопке
-        link.href = telegram;
-
-        link.classList.remove("disabled");
-        link.removeAttribute("aria-disabled");
+        // Без кнопок и ожидания
+        // Сразу переходим в Telegram
+        window.location.replace(telegram);
 
         return;
       }
@@ -348,8 +343,9 @@
         link.classList.remove("disabled");
         link.removeAttribute("aria-disabled");
 
-        // Обычное нажатие заблокировано,
-        // удержание ссылки оставлено
+        // Обычное нажатие отключено.
+        // Удержание ссылки доступно,
+        // если браузер это поддерживает.
         link.addEventListener("click", event => {
           event.preventDefault();
         });
