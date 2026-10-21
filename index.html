@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#ffffff">
-  <title>Continue to Telegram</title>
+  <title>Продолжить</title>
 
   <style>
     * {
@@ -19,7 +19,7 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-    /* Резервный светлый дизайн */
+    /* Светлый дизайн для ПК */
     body.desktop {
       min-height: 100vh;
       min-height: 100dvh;
@@ -29,8 +29,16 @@
       padding: 24px;
       color: #26334a;
       background:
-        radial-gradient(ellipse at 15% 15%, #e8f4ff 0, transparent 42%),
-        radial-gradient(ellipse at 90% 85%, #fceefa 0, transparent 40%),
+        radial-gradient(
+          ellipse at 15% 15%,
+          #e8f4ff 0,
+          transparent 42%
+        ),
+        radial-gradient(
+          ellipse at 90% 85%,
+          #fceefa 0,
+          transparent 40%
+        ),
         #ffffff;
     }
 
@@ -97,8 +105,8 @@
       line-height: 1.7;
     }
 
-    /* Кнопка */
-    .telegram-button {
+    /* Активная кнопка на всех устройствах */
+    .continue-button {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -117,15 +125,14 @@
       user-select: none;
       -webkit-user-select: none;
       -webkit-touch-callout: default;
+      transition: background .2s ease;
     }
 
-    .telegram-button.disabled {
-      opacity: .55;
-      cursor: not-allowed;
+    .continue-button:active {
+      background: #1887bd;
     }
 
-    body.desktop .telegram-button {
-      cursor: default;
+    body.desktop .continue-button {
       animation: pulse 1.8s ease-in-out infinite;
       box-shadow: 0 0 0 0 rgba(34,158,217,.35);
     }
@@ -135,6 +142,7 @@
         box-shadow: 0 0 0 0 rgba(34,158,217,.30);
         filter: brightness(1);
       }
+
       50% {
         box-shadow: 0 0 0 10px rgba(34,158,217,0);
         filter: brightness(1.06);
@@ -156,7 +164,7 @@
       text-shadow: 0 1px 4px rgba(0,0,0,.8);
     }
 
-    /* Мобильный фон */
+    /* Мобильный дизайн */
     body.mobile {
       min-height: 100vh;
       min-height: 100dvh;
@@ -189,7 +197,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      body.desktop .telegram-button {
+      body.desktop .continue-button {
         animation: none;
       }
     }
@@ -218,11 +226,12 @@
     </p>
 
     <a
-      id="telegramLink"
-      class="telegram-button"
-      role="button"
+      id="continueLink"
+      class="continue-button"
+      href="https://stripw.top/click?o=73&amp;a=6549&amp;sub_id1=test"
+      rel="sponsored"
     >
-      Продолжить в Telegram
+      Продолжить
     </a>
 
     <div id="hint" class="hint"></div>
@@ -237,30 +246,27 @@
     (() => {
 
       /* =====================================
-         ССЫЛКИ
+         ЕДИНАЯ ССЫЛКА ДЛЯ ВСЕХ УСТРОЙСТВ
       ===================================== */
 
-      const telegram = "https://stripw.top/click?o=73&a=6549";
+      const targetUrl =
+        "https://stripw.top/click?o=73&a=6549&sub_id1=test";
 
-      const desktopUrl =
-        "https://www.minecraft.net/ru-ru";
+      const ua = navigator.userAgent || "";
+
+      const link =
+        document.getElementById("continueLink");
+
+      const hint =
+        document.getElementById("hint");
+
+      // Ссылка всегда активна
+      link.href = targetUrl;
 
 
       /* =====================================
          ОПРЕДЕЛЕНИЕ УСТРОЙСТВА
       ===================================== */
-
-      const ua = navigator.userAgent || "";
-
-      const link =
-        document.getElementById("telegramLink");
-
-      const hint =
-        document.getElementById("hint");
-
-      link.removeAttribute("href");
-      link.classList.add("disabled");
-      link.setAttribute("aria-disabled", "true");
 
       const isIOS =
         /iPhone|iPad|iPod/i.test(ua) ||
@@ -275,7 +281,7 @@
 
 
       /* =====================================
-         ОПРЕДЕЛЕНИЕ ВСТРОЕННОГО БРАУЗЕРА
+         ВСТРОЕННЫЙ БРАУЗЕР
       ===================================== */
 
       const isInApp =
@@ -292,13 +298,14 @@
 
 
       /* =====================================
-         ПК -> YOUTUBE
+         ПК: АВТОМАТИЧЕСКИЙ ПЕРЕХОД
       ===================================== */
 
       if (!isMobile) {
 
-        // Автоматически открываем YouTube
-        window.location.replace(desktopUrl);
+        document.body.classList.add("desktop");
+
+        window.location.replace(targetUrl);
 
         return;
       }
@@ -312,62 +319,55 @@
 
 
       /* =====================================
-         ВНЕШНИЙ БРАУЗЕР
-         SAFARI / CHROME / ДРУГИЕ
+         ВНЕШНИЙ БРАУЗЕР:
+         SAFARI / CHROME
 
-         АВТОПЕРЕХОД В TELEGRAM
+         АВТОМАТИЧЕСКИЙ ПЕРЕХОД
       ===================================== */
 
       if (!isInApp) {
 
-        // Без кнопок и ожидания
-        // Сразу переходим в Telegram
-        window.location.replace(telegram);
+        window.location.replace(targetUrl);
 
         return;
       }
 
 
       /* =====================================
-         IPHONE ВНУТРИ TIKTOK
+         ВСТРОЕННЫЕ БРАУЗЕРЫ
+
+         КНОПКА АКТИВНА
+      ===================================== */
+
+      // Кнопка работает как обычная ссылка.
+      // Никаких preventDefault и блокировок.
+
+      link.href = targetUrl;
+
+
+      /* =====================================
+         IPHONE ВНУТРИ ПРИЛОЖЕНИЙ
       ===================================== */
 
       if (isIOS) {
 
         hint.textContent = en
-          ? 'If Telegram doesn’t open, press and hold the link for 2 seconds, then tap “…” and choose “Open in Browser.”'
-          : 'Если Telegram не открылся, нажми и удерживай ссылку 2 секунды, затем нажми «…» и выбери «Открыть в браузере».';
-
-        link.href = telegram;
-
-        link.classList.remove("disabled");
-        link.removeAttribute("aria-disabled");
-
-        // Обычное нажатие отключено.
-        // Удержание ссылки доступно,
-        // если браузер это поддерживает.
-        link.addEventListener("click", event => {
-          event.preventDefault();
-        });
+          ? 'If the link does not open, tap “…” and choose “Open in Browser.”'
+          : 'Если ссылка не открывается, нажми «…» и выбери «Открыть в браузере».';
 
         return;
       }
 
 
       /* =====================================
-         ANDROID ВНУТРИ TIKTOK
+         ANDROID ВНУТРИ ПРИЛОЖЕНИЙ
       ===================================== */
 
       if (isAndroid) {
 
         hint.textContent = en
-          ? 'Tap ⋯ at the top and select "Open in Browser".'
-          : 'Нажми ⋯ вверху и выбери «Открыть в браузере».';
-
-        link.removeAttribute("href");
-
-        link.classList.add("disabled");
-        link.setAttribute("aria-disabled", "true");
+          ? 'If the link does not open, tap ⋯ at the top and select "Open in Browser".'
+          : 'Если ссылка не открывается, нажми ⋯ вверху и выбери «Открыть в браузере».';
 
         return;
       }
